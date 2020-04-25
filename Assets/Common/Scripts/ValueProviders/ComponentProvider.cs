@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using RSG;
 
-namespace Endo
+namespace Common
 {
     public abstract class ComponentProvider : ValueProvider<Component>
     {

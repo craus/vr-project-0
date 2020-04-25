@@ -15,15 +15,19 @@ public static class XRNodeStateExtensions
         return s.nodeType.ToString();
     }
 
-    public static Vector3 Position(this XRNodeState s) {
+    public static Vector3? Position(this XRNodeState s) {
         Vector3 result;
-        s.TryGetPosition(out result);
-        return result;
+        if (s.TryGetPosition(out result)) {
+            return result;
+        }
+        return null;
     }
 
-    public static Quaternion Rotation(this XRNodeState s) {
+    public static Quaternion? Rotation(this XRNodeState s) {
         Quaternion result;
-        s.TryGetRotation(out result);
-        return result;
+        if (s.TryGetRotation(out result)) {
+            return result;
+        }
+        return null;
     }
 }

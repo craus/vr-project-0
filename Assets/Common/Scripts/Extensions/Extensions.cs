@@ -51,6 +51,10 @@ public static class Extensions
         return x * x;
     }
 
+    public static int floor(this float x) {
+        return (int)Math.Floor(x);
+    }
+
     public static void swap<T>(this List<T> list, int x, int y)
     {
         T buf = list[x];

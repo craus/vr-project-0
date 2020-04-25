@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-namespace Endo
+namespace Common
 {
     public class GameObjectActiveCondition : BoolValueProvider
     {

@@ -8,7 +8,7 @@ public class XRNodeFollow : MonoBehaviour
     public XRNode node;
 
     void Update() {
-        transform.position = XRInput.node(node).Position();
-        transform.rotation = XRInput.node(node).Rotation();
+        transform.position = XRInput.node(node).Position() ?? transform.position;
+        transform.rotation = XRInput.node(node).Rotation() ?? transform.rotation;
     }
 }
