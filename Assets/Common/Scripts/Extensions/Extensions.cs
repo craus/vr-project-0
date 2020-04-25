@@ -81,6 +81,24 @@ public static class Extensions
         return list.Except(except).ToList().rnd();
     }
 
+    public static Vector3 RandomPointInBounds(Bounds bounds) {
+        return new Vector3(
+            UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+            UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+            UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
+        );
+    }
+
+    public static T GenerateWithCondition<T>(Func<T> generate, Predicate<T> condition, int steps = 100) {
+        for (int i = 0; i < steps; i++) {
+            T result = generate();
+            if (condition(result)) {
+                return result;
+            }
+        }
+        return generate();
+    }
+
     public static T minBy<T>(this List<T> list, Func<T, double> criteria) where T : class
     {
         T result = null;

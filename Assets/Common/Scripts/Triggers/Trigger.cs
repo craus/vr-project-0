@@ -12,6 +12,7 @@ namespace Endo
 
         [ReadOnly] [SerializeField] private bool triggered;
 
+        [ContextMenu("Run")]
         public void Run()
         {
             if (!once || !triggered)
