@@ -55,6 +55,11 @@ public class MoveSpace : MonoBehaviour
                 DoubleGrip();
             }
         }
+        DebugManager.DebugValue("Left Thumbstick X", Input.GetAxisRaw("Left Thumbstick X"));
+        DebugManager.DebugValue("Left Thumbstick Y", Input.GetAxisRaw("Left Thumbstick Y"));
+        DebugManager.DebugValue("Right Thumbstick X", Input.GetAxisRaw("Right Thumbstick X"));
+        DebugManager.DebugValue("Right Thumbstick Y", Input.GetAxisRaw("Right Thumbstick Y"));
+        //Input.
         if (Input.GetKeyDown(rightGrip) || Input.GetKeyUp(leftGrip) && Input.GetKey(rightGrip)) {
             Grip(rightGripper, rightGripped);
             if (Input.GetKey(leftGrip)) {
