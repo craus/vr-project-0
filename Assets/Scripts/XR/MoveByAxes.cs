@@ -1,37 +1,49 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.XR;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.XR;
 
-//public class MoveByAxe : MonoBehaviour
-//{
-//    public string xAxis;
-//    public string yAxis;
+public class MoveByAxes : MonoBehaviour
+{
+    public string xAxis;
+    public string yAxis;
+    public string zAxis;
 
-//    public Transform target;
-//    public Transform relativeTo;
+    public Vector3 multiplier = Vector3.one;
 
-//    public Vector3 direction;
+    public Transform target;
+    public CharacterController targetCharacter;
+    public Transform relativeTo;
 
-//    private Vector3 absoluteDirection => relativeTo != null ? relativeTo.TransformDirection(direction) : direction;
+    public bool ignoreVerticalMovement = false;
+    public bool allowFastDiagonalMovement = false;
 
-//    public bool ignoreVerticalMovement = false;
+    public float speed = 1;
 
-//    public float speed = 1;
+    private float x => xAxis != "" ? Input.GetAxisRaw(xAxis) : 0;
+    private float y => yAxis != "" ? Input.GetAxisRaw(yAxis) : 0;
+    private float z => zAxis != "" ? Input.GetAxisRaw(zAxis) : 0;
 
-//    public float value => Input.GetAxisRaw(axe);
+    private Vector3 inputMove => new Vector3(x, y, z).Scaled(multiplier);
+    private Vector3 clampedMove => allowFastDiagonalMovement ? inputMove : Vector3.ClampMagnitude(inputMove, 1);
+    private Vector3 absoluteMove => relativeTo != null ? relativeTo.TransformVector(clampedMove) : clampedMove;
+    private Vector3 finalMove => ignoreVerticalMovement ? absoluteMove.Change(y: 0).normalized * absoluteMove.magnitude : absoluteMove;
 
-//    private void Awake() {
-//        if (target == null) {
-//            target = transform;
-//        }
-//    }
+    private void Awake() {
+        if (target == null && targetCharacter == null) {
+            target = transform;
+        }
+    }
 
-//    void Update() {
-//        if (relativeTo == null) {
-//            target.Translate(direction * value * speed * Time.deltaTime, Space.World);
-//        } else {
-//            target.Translate( * value * speed * Time.deltaTime, Space.World);
-//        }
-//    }
-//}
+    void Update() {
+        if (target != null) {
+            target.Translate(finalMove * speed * Time.deltaTime, Space.World);
+        }
+    }
+
+    void FixedUpdate() {
+        if (targetCharacter != null) {
+            targetCharacter.Move(finalMove * speed * Time.fixedDeltaTime);
+        }
+    }
+}
